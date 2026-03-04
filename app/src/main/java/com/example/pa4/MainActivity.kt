@@ -13,7 +13,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,7 +50,8 @@ class MainActivity : ComponentActivity(), SensorEventListener {
             PA4Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     SkiScreen(
-                        onStartRun = { /* hook up to viewModel later */ }
+                        onStartRun = { //hook up to viewmodel
+                        }// }
                     )
                 }
             }

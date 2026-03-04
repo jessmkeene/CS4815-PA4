@@ -27,7 +27,7 @@ import com.example.pa4.ui.components.StartRunButton
 fun SkiScreen(
     //need to be connected to viewmodel
     onStartRun: () -> Unit = {},
-    temperature: String = "28°F",
+    temperature: String = "27°F",
     weatherDesc: String = "Light Snow",
     windSpeed: String = "12 mph",
     humidity: String = "74%",
