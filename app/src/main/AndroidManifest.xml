@@ -29,10 +29,7 @@
         </activity>
         <receiver
             android:name=".SkiBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-
-            </intent-filter>
+            android:exported="false">
         </receiver>
     </application>
 

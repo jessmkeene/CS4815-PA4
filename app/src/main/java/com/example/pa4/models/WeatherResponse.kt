@@ -1,9 +1,4 @@
-package com.example.pa4.data
-import wpics.weather.models.MainData
-import wpics.weather.models.WeatherDesc
-import wpics.weather.models.WindData
-import wpics.weather.models.Rain
-import wpics.weather.models.SysData
+package wpics.weather.models
 
 /**
  * Root response object for current weather data.

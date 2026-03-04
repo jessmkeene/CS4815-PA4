@@ -1,7 +1,7 @@
 package com.example.pa4.data
 
-import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.GET
 import com.example.pa4.data.ForecastResponse
 import com.example.pa4.data.WeatherResponse
 

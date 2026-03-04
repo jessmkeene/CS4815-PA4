@@ -1,13 +1,17 @@
 package com.example.pa4
 
 import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
+import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -34,19 +38,32 @@ class MainActivity : ComponentActivity(), SensorEventListener {
 
         //define receiver
         buttonClicked = object : BroadcastReceiver() {
+            override fun onReceive(
+                context: Context?,
+                intent: Intent?
+            ) {
+                TODO("Not yet implemented")
+            }
 
         }
         enableEdgeToEdge()
         setContent {
             PA4Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                    SkiScreen(
+                        onStartRun = { /* hook up to viewModel later */ }
                     )
                 }
             }
         }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        TODO("Not yet implemented")
     }
 }
 

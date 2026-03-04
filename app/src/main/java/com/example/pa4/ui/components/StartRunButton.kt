@@ -1,46 +1,38 @@
 package com.example.pa4.ui.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import wpics.weather.models.UnitSystem
-
-/**
- * A selection row using FilterChips to toggle between Metric, Imperial, and Hybrid units.
- *
- * @param selectedSystem The currently active [UnitSystem].
- * @param onSystemSelected Callback triggered when a new system is chosen.
- */
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-class StartRunButton (
-    selectedSystem: UnitSystem,
-    onSystemSelected: (UnitSystem) -> Unit
+fun StartRunButton(
+    isRunActive: Boolean,
+    onToggle: () -> Unit
 ) {
-    Row(
-    modifier = Modifier
-    .fillMaxWidth()
-    .padding(horizontal = 16.dp, vertical = 8.dp),
-    horizontalArrangement = Arrangement.spacedBy(8.dp)
+    Button(
+        onClick = onToggle,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp)
+            .height(56.dp),
+        shape = RoundedCornerShape(28.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (isRunActive)
+                MaterialTheme.colorScheme.error
+            else
+                MaterialTheme.colorScheme.primary
+        )
     ) {
-        UnitSystem.entries.forEach { system ->
-            FilterChip(
-                selected = selectedSystem == system,
-                onClick = { onSystemSelected(system) },
-                label = {
-                    Text(
-                        text = system.displayName,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.labelLarge,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                    ) },
-                modifier = Modifier.weight(1f),
-            )
-        }
+        Text(
+            text = if (isRunActive) "⏹  END RUN" else "▶  START RUN",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Black,
+            letterSpacing = 2.sp
+        )
     }
 }
