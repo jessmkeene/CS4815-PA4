@@ -1,84 +1,60 @@
 package com.example.pa4
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pa4.ui.MainScreen
 import com.example.pa4.ui.theme.PA4Theme
-import com.example.pa4.ui.SkiScreen
-import com.example.pa4.viewmodel.SkiViewModel
+import com.example.pa4.models.PlayServicesLocationRepository
+import android.hardware.SensorManager
+import androidx.activity.result.contract.ActivityResultContracts
+import android.Manifest
+import com.example.pa4.data.SettingsRepository
 
-class MainActivity : ComponentActivity(), SensorEventListener {
-    private lateinit var sensorManager: SensorManager
-    private var lightSensor: Sensor? = null
-    private val viewModel: SkiViewModel by viewModels()
-    private lateinit var buttonClicked: BroadcastReceiver
+class MainActivity : ComponentActivity() {
+
+    private fun requestPermissions() {
+        val launcher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            // optional: handle permission results here
+        }
+        launcher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.ACTIVITY_RECOGNITION
+            )
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //set up sensors
-        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
-        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        val locationRepository = PlayServicesLocationRepository(this)
+        val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        val settingsRepository = SettingsRepository(this)
 
-        //define receiver
-        buttonClicked = object : BroadcastReceiver() {
-            override fun onReceive(
-                context: Context?,
-                intent: Intent?
-            ) {
-                TODO("Not yet implemented")
-            }
+        requestPermissions()  // ← handle before setContent in production
 
-        }
         enableEdgeToEdge()
         setContent {
             PA4Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SkiScreen(
-                        onStartRun = { //hook up to viewmodel
-                        }// }
+                    MainScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        locationRepository = locationRepository,
+                        sensorManager = sensorManager,
+                        settingsRepository = settingsRepository
                     )
                 }
             }
         }
-    }
-
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        TODO("Not yet implemented")
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PA4Theme {
-        Greeting("Android")
     }
 }

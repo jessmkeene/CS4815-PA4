@@ -19,169 +19,184 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pa4.data.SkiState
 import com.example.pa4.ui.theme.*
 import com.example.pa4.ui.components.StartRunButton
+import com.example.pa4.viewmodel.SkiViewModel
 
-
+/**
+ * Composable function for rendering SkiScreen
+ */
 @Composable
-fun SkiScreen(
-    //need to be connected to viewmodel
-    onStartRun: () -> Unit = {},
-    temperature: String = "27°F",
-    weatherDesc: String = "Light Snow",
-    windSpeed: String = "12 mph",
-    humidity: String = "74%",
-    locationName: String = "Mt. Wachusett",
-    isRunActive: Boolean = false
+fun SkiScreen(vm: SkiViewModel = viewModel()) {
+    val scrollState = rememberScrollState()
+    val state by vm.uiState.collectAsState()
+
+    SkiScreenContent(
+        state = state,
+        onStartRun = {vm.onRunButtonPressed()}
+    )
+    }
+
+/**
+ * Displays content of the screen
+ * @param state Current ski state
+ * @param onStartRun A Callback function for handling the ski button
+ */
+@Composable
+fun SkiScreenContent(
+    state: SkiState,
+    onStartRun: () -> Unit
 ) {
     val scrollState = rememberScrollState()
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(NavyDeep, NavyMid, Color(0xFF0F172A))
-                )
-            )
-    ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(horizontal = 24.dp)
-                .padding(top = 56.dp, bottom = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            //location
-            Text(
-                text = "▲  $locationName",
-                color = IceBlue,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 3.sp
-            )
-
-            Spacer(Modifier.height(6.dp))
-
-            Text(
-                text = "SKI TRACKER",
-                color = White,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Black,
-                letterSpacing = 6.sp
-            )
-
-            Spacer(Modifier.height(4.dp))
-            Box(
-                modifier = Modifier
-                    .width(48.dp)
-                    .height(2.dp)
-                    .background(
-                        Brush.horizontalGradient(listOf(IceBlue, BrightBlue))
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(NavyDeep, NavyMid, Color(0xFF0F172A))
                     )
-            )
-
-            Spacer(Modifier.height(48.dp))
-
-            StartRunButton(
-                isRunActive = isRunActive,
-                onToggle = onStartRun
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            Text(
-                text = if (isRunActive) "Run in progress…" else "Tap to begin your run",
-                color = OffWhite,
-                fontSize = 13.sp,
-                letterSpacing = 1.sp
-            )
-
-            Spacer(Modifier.height(48.dp))
-
-            //weather
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(1.dp)
-                        .background(SlateLight)
                 )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 56.dp, bottom = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                //location
                 Text(
-                    text = "  CONDITIONS  ",
+                    text = "▲  ${state.locationName}",
                     color = IceBlue,
-                    fontSize = 11.sp,
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 3.sp
                 )
+
+                Spacer(Modifier.height(6.dp))
+
+                Text(
+                    text = "SKI TRACKER",
+                    color = White,
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Black,
+                    letterSpacing = 6.sp
+                )
+
+                Spacer(Modifier.height(4.dp))
                 Box(
                     modifier = Modifier
-                        .weight(1f)
-                        .height(1.dp)
-                        .background(SlateLight)
+                        .width(48.dp)
+                        .height(2.dp)
+                        .background(
+                            Brush.horizontalGradient(listOf(IceBlue, BrightBlue))
+                        )
                 )
-            }
 
-            Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(48.dp))
 
-            //temp card from weather app
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(SlateCard)
-                    .padding(24.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = temperature,
-                        fontSize = 64.sp,
-                        fontWeight = FontWeight.Black,
-                        color = White,
-                        letterSpacing = (-2).sp
+                StartRunButton(
+                    isRunActive = state.isPressed,
+                    onToggle = onStartRun
+                )
+
+                Spacer(Modifier.height(12.dp))
+
+                Text(
+                    text = if (state.isPressed) "Run in progress…" else "Tap to begin your run",
+                    color = OffWhite,
+                    fontSize = 13.sp,
+                    letterSpacing = 1.sp
+                )
+
+                Spacer(Modifier.height(48.dp))
+
+                //weather
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(1.dp)
+                            .background(SlateLight)
                     )
-                    Spacer(Modifier.height(4.dp))
                     Text(
-                        text = weatherDesc.uppercase(),
-                        fontSize = 13.sp,
+                        text = "  CONDITIONS  ",
+                        color = IceBlue,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
-                        letterSpacing = 3.sp,
-                        color = IceBlue
+                        letterSpacing = 3.sp
+                    )
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(1.dp)
+                            .background(SlateLight)
                     )
                 }
+
+                Spacer(Modifier.height(20.dp))
+
+                //temp card from weather app
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(SlateCard)
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = state.temperature,
+                            fontSize = 64.sp,
+                            fontWeight = FontWeight.Black,
+                            color = White,
+                            letterSpacing = (-2).sp
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = state.weatherDesc.uppercase(),
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 3.sp,
+                            color = IceBlue
+                        )
+                    }
+                }
+
+                Spacer(Modifier.height(12.dp))
+
+                //wind and humidity cards
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    WeatherStatCard(
+                        icon = Icons.Default.Air,
+                        label = "WIND",
+                        value = state.windSpeed,
+                        modifier = Modifier.weight(1f)
+                    )
+                    WeatherStatCard(
+                        icon = Icons.Default.WaterDrop,
+                        label = "HUMIDITY",
+                        value = state.humidity,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Spacer(Modifier.height(12.dp))
             }
-
-            Spacer(Modifier.height(12.dp))
-
-            //wind and humidity cards
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                WeatherStatCard(
-                    icon = Icons.Default.Air,
-                    label = "WIND",
-                    value = windSpeed,
-                    modifier = Modifier.weight(1f)
-                )
-                WeatherStatCard(
-                    icon = Icons.Default.WaterDrop,
-                    label = "HUMIDITY",
-                    value = humidity,
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
-            Spacer(Modifier.height(12.dp))
         }
     }
-}
+
 
 //stat card from weather
 @Composable
