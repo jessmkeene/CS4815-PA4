@@ -1,0 +1,16 @@
+CS 4518 Mobile and Ubiquitous Computing
+PA4 Ski Tracker App
+
+Names: Chloe Polit and Jess Keene
+
+How are you using your sensors to intelligently react to the user's environment and "assist" the user
+- Current weather updates from API to let user know how cold it is
+- Location services, sensors for accelerometer for tracking ski runs
+
+
+Any instructions that we should know on how to run/use your application.
+Run on emulator in Android Studio
+
+Any references/resources used. I highly doubt this section will be blank, since there is so much we didn't cover in this class!
+
+Resources:
