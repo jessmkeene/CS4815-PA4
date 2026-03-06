@@ -1,3 +1,5 @@
+//Chloe Polit and Jessica Keene
+
 package com.example.pa4.viewmodel
 
 import android.hardware.Sensor
@@ -8,6 +10,7 @@ import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.pa4.data.SettingsRepository
 import com.example.pa4.data.SkiState
 import com.example.pa4.data.WeatherRepository
 import com.example.pa4.models.Coordinate
@@ -15,23 +18,29 @@ import com.example.pa4.models.LocationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import wpics.weather.models.UnitSystem
 
 class SkiViewModel(
     private val repository: LocationRepository,
     private val sensorManager: SensorManager,
-    private val weatherRepository: WeatherRepository = WeatherRepository()  // ← default instance
+    private val weatherRepository: WeatherRepository = WeatherRepository(), //default instance
+    private val settingsRepository: SettingsRepository
 ) : ViewModel(), SensorEventListener {
 
     private val _uiState = MutableStateFlow(SkiState())
     val uiState: StateFlow<SkiState> = _uiState.asStateFlow()
+
+    private val _currentUnits = MutableStateFlow(UnitSystem.IMPERIAL)
 
     private val accelerometer: Sensor? =
         sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
     init {
         observeLocation()
+        observeSettings()
         accelerometer?.let { sensor ->
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
         }
@@ -68,14 +77,28 @@ class SkiViewModel(
                         confidence = calculateConfidence(current.isPressed, still)
                     )
                 }
-                fetchWeather(coordinate)   // ← fetch weather on each location update
+                fetchWeather(coordinate, _currentUnits.value)
             }
         }
     }
 
-    private fun fetchWeather(coordinate: Coordinate) {
+    private fun observeSettings() {
         viewModelScope.launch {
-            val result = weatherRepository.getWeather(coordinate.lat, coordinate.lng)
+            settingsRepository.settingsFlow.collect { settings ->
+                _currentUnits.value = settings.unitSystem
+                _uiState.value.currentLocation?.let { coord ->
+                    fetchWeather(coord, settings.unitSystem)
+                }
+            }
+        }
+    }
+
+    private fun fetchWeather(
+        coordinate: Coordinate,
+        units: UnitSystem = UnitSystem.IMPERIAL
+        ) {
+        viewModelScope.launch {
+            val result = weatherRepository.getWeather(coordinate.lat, coordinate.lng, units)
             _uiState.update { current ->
                 current.copy(
                     temperature = result.temperature,
@@ -143,11 +166,17 @@ class SkiViewModel(
 
         fun factory(
             repository: LocationRepository,
-            sensorManager: SensorManager
+            sensorManager: SensorManager,
+            settingsRepository: SettingsRepository
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T =
-                SkiViewModel(repository, sensorManager) as T
+                SkiViewModel(
+                    repository = repository,
+                    sensorManager = sensorManager,
+                    weatherRepository = WeatherRepository(),
+                    settingsRepository = settingsRepository
+                ) as T
         }
     }
 }

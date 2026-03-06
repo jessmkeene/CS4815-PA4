@@ -1,3 +1,5 @@
+//Chloe Polit and Jessica Keene
+
 package com.example.pa4.ui
 
 import androidx.compose.foundation.background
@@ -24,6 +26,8 @@ import com.example.pa4.data.SkiState
 import com.example.pa4.ui.theme.*
 import com.example.pa4.ui.components.StartRunButton
 import com.example.pa4.viewmodel.SkiViewModel
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
 
 /**
  * Composable function for rendering SkiScreen
@@ -47,17 +51,14 @@ fun SkiScreen(vm: SkiViewModel = viewModel()) {
 @Composable
 fun SkiScreenContent(
     state: SkiState,
-    onStartRun: () -> Unit
+    onStartRun: () -> Unit,
+    isDark: Boolean = !isSystemInDarkTheme()
 ) {
     val scrollState = rememberScrollState()
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(NavyDeep, NavyMid, Color(0xFF0F172A))
-                    )
-                )
+                .background(MaterialTheme.colorScheme.background)
         ) {
             Column(
                 modifier = Modifier
@@ -71,7 +72,7 @@ fun SkiScreenContent(
                 //location
                 Text(
                     text = "▲  ${state.locationName}",
-                    color = IceBlue,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 3.sp
@@ -81,7 +82,7 @@ fun SkiScreenContent(
 
                 Text(
                     text = "SKI TRACKER",
-                    color = White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Black,
                     letterSpacing = 6.sp
@@ -108,7 +109,7 @@ fun SkiScreenContent(
 
                 Text(
                     text = if (state.isPressed) "Run in progress…" else "Tap to begin your run",
-                    color = OffWhite,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 13.sp,
                     letterSpacing = 1.sp
                 )
@@ -128,7 +129,7 @@ fun SkiScreenContent(
                     )
                     Text(
                         text = "  CONDITIONS  ",
-                        color = IceBlue,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 3.sp
@@ -148,7 +149,7 @@ fun SkiScreenContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(20.dp))
-                        .background(SlateCard)
+                        .background(MaterialTheme.colorScheme.surface)
                         .padding(24.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -157,7 +158,7 @@ fun SkiScreenContent(
                             text = state.temperature,
                             fontSize = 64.sp,
                             fontWeight = FontWeight.Black,
-                            color = White,
+                            color = MaterialTheme.colorScheme.onSurface,
                             letterSpacing = (-2).sp
                         )
                         Spacer(Modifier.height(4.dp))
@@ -166,7 +167,7 @@ fun SkiScreenContent(
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 3.sp,
-                            color = IceBlue
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }

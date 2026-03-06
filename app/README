@@ -1,26 +1,28 @@
 CS 4518 Mobile and Ubiquitous Computing
 PA4 Ski Tracker App
+Goal: This app allows a user to log on, see the current weather where they are, and start and stop a ski run.
 
 Names: Chloe Polit and Jess Keene
 
-How are you using your sensors to intelligently react to the user's environment and "assist" the user
 Software sensor:
-- Current weather updates from API to let user know current temperature and conditions on the mountains
+- Current weather updates from API to let user know current temperature and conditions on the mountains for user display
 Hardware sensors:
 - Location services for altitude/GPS
-- Accelerometer to track speeds of run / if user is stationary
+- Accelerometer to track speeds of run and if user is stationary
+- GPS: Provides continuous coordinate updates every 3 seconds to track run location and detect displacement.
+
+Background Task:
+A ForegroundService (ForegroundLocationService run in AndroidManifest and GeofenceTransitionsReciever) continues GPS tracking
+even when the app is not being used, making sure run data is not lost.
 
 
-Any instructions that we should know on how to run/use your application.
+Instructions:
 Run on emulator in Android Studio
-Click start run button to begin tracking a run, button appearance should change and
-click end run button to end run
+Click start run button to begin tracking a run, button appearance should change and click end run button to end run
 Refer to the tabs for any further explanation or instruction.
+Navigate through bottom bar for pages, go to settings to toggle light/dark mode, change units, and enable background tracking
 
-Any references/resources used. I highly doubt this section will be blank, since there is so much we didn't cover in this class!
-
-Resources:
-Referenced
+Resources/References:
 GompeiFountainJumpApp and CityExplorerApp for proper implementation of multiple tabs/screens,
 MVVM architecture, and utilization of buttons for our main functionality within the app.
 The usage of the models package from CityExplorerApp was implemented within our own app.

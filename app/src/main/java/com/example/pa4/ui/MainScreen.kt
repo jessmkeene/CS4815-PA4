@@ -1,3 +1,5 @@
+//Chloe Polit and Jessica Keene
+
 package com.example.pa4.ui
 
 import android.hardware.SensorManager
@@ -23,7 +25,11 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     val skiViewModel: SkiViewModel = viewModel(
-        factory = SkiViewModel.factory(locationRepository, sensorManager)  // ← added sensorManager
+        factory = SkiViewModel.factory(
+            repository = locationRepository,
+            sensorManager = sensorManager,
+            settingsRepository = settingsRepository
+        )
     )
 
     Scaffold(

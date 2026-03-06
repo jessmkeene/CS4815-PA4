@@ -1,3 +1,5 @@
+//Chloe Polit and Jessica Keene
+
 package com.example.pa4.ui
 
 import androidx.compose.foundation.background
@@ -36,9 +38,7 @@ fun SettingsScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.verticalGradient(
-                    colors = listOf(NavyDeep, NavyMid, Color(0xFF0F172A))
-                )
+                MaterialTheme.colorScheme.background
             )
     ) {
         Column(
@@ -50,10 +50,9 @@ fun SettingsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // ── Header ────────────────────────────────────────────────────────
             Text(
                 text = "SETTINGS",
-                color = White,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Black,
                 letterSpacing = 6.sp
@@ -67,7 +66,6 @@ fun SettingsScreen(
             )
             Spacer(Modifier.height(36.dp))
 
-            // ── Units ─────────────────────────────────────────────────────────
             SettingsSectionHeader("UNITS")
             Spacer(Modifier.height(12.dp))
             SettingsCard {
@@ -82,14 +80,14 @@ fun SettingsScreen(
                         ) {
                             Text(
                                 text = unit.displayName,
-                                color = White,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 15.sp
                             )
                             RadioButton(
                                 selected = state.unitSystem == unit,
                                 onClick = { vm.setUnitSystem(unit) },
                                 colors = RadioButtonDefaults.colors(
-                                    selectedColor = IceBlue,
+                                    selectedColor = MaterialTheme.colorScheme.primary,
                                     unselectedColor = SlateLight
                                 )
                             )
@@ -100,7 +98,6 @@ fun SettingsScreen(
 
             Spacer(Modifier.height(24.dp))
 
-            // ── Display ───────────────────────────────────────────────────────
             SettingsSectionHeader("DISPLAY")
             Spacer(Modifier.height(12.dp))
             SettingsCard {
@@ -115,7 +112,7 @@ fun SettingsScreen(
 
             Spacer(Modifier.height(24.dp))
 
-            // ── Tracking ──────────────────────────────────────────────────────
+
             SettingsSectionHeader("TRACKING")
             Spacer(Modifier.height(12.dp))
             SettingsCard {
@@ -131,7 +128,6 @@ fun SettingsScreen(
     }
 }
 
-// ── Reusable components ───────────────────────────────────────────────────────
 
 @Composable
 private fun SettingsSectionHeader(title: String) {
@@ -142,7 +138,7 @@ private fun SettingsSectionHeader(title: String) {
         Box(modifier = Modifier.weight(1f).height(1.dp).background(SlateLight))
         Text(
             text = "  $title  ",
-            color = IceBlue,
+            color = SlateLight,
             fontSize = 11.sp,
             fontWeight = FontWeight.Bold,
             letterSpacing = 3.sp
@@ -157,7 +153,7 @@ private fun SettingsCard(content: @Composable () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(SlateCard)
+            .background(SlateLight)
             .padding(20.dp)
     ) {
         content()
@@ -189,8 +185,8 @@ private fun SettingsToggleRow(
             )
             Spacer(Modifier.width(12.dp))
             Column {
-                Text(text = label, color = White, fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                Text(text = description, color = OffWhite, fontSize = 12.sp)
+                Text(text = label, color = MaterialTheme.colorScheme.primary, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Text(text = description, color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
             }
         }
         Switch(

@@ -1,3 +1,5 @@
+//Chloe Polit and Jessica Keene
+
 package com.example.pa4.ui
 
 import androidx.compose.foundation.background
@@ -27,11 +29,7 @@ fun ContextScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(NavyDeep, NavyMid, Color(0xFF0F172A))
-                )
-            )
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             modifier = Modifier
@@ -42,10 +40,9 @@ fun ContextScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // ── Header ────────────────────────────────────────────────────────
             Text(
                 text = "▲  HOW IT WORKS",
-                color = IceBlue,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 3.sp
@@ -53,7 +50,7 @@ fun ContextScreen() {
             Spacer(Modifier.height(6.dp))
             Text(
                 text = "CONTEXT",
-                color = White,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Black,
                 letterSpacing = 6.sp
@@ -63,11 +60,10 @@ fun ContextScreen() {
                 modifier = Modifier
                     .width(48.dp)
                     .height(2.dp)
-                    .background(Brush.horizontalGradient(listOf(IceBlue, BrightBlue)))
+                    .background(MaterialTheme.colorScheme.secondary)
             )
             Spacer(Modifier.height(36.dp))
 
-            // ── Signal 1: Button ──────────────────────────────────────────────
             ContextCard(
                 icon = Icons.Default.TouchApp,
                 title = "User Input Signal",
@@ -77,7 +73,6 @@ fun ContextScreen() {
             )
             Spacer(Modifier.height(16.dp))
 
-            // ── Signal 2: Accelerometer ───────────────────────────────────────
             ContextCard(
                 icon = Icons.Default.Speed,
                 title = "Motion Detection",
@@ -88,7 +83,6 @@ fun ContextScreen() {
             )
             Spacer(Modifier.height(16.dp))
 
-            // ── Signal 3: GPS ─────────────────────────────────────────────────
             ContextCard(
                 icon = Icons.Default.LocationOn,
                 title = "GPS Location Tracking",
@@ -99,7 +93,6 @@ fun ContextScreen() {
             )
             Spacer(Modifier.height(16.dp))
 
-            // ── Confidence ────────────────────────────────────────────────────
             ContextCard(
                 icon = Icons.Default.Analytics,
                 title = "Confidence Score",
@@ -110,11 +103,9 @@ fun ContextScreen() {
             )
             Spacer(Modifier.height(16.dp))
 
-            // ── Confidence Table ──────────────────────────────────────────────
             ConfidenceTable()
             Spacer(Modifier.height(16.dp))
 
-            // ── Geofencing ────────────────────────────────────────────────────
             ContextCard(
                 icon = Icons.Default.FmdGood,
                 title = "Geofence Auto-Start",
@@ -137,7 +128,7 @@ private fun ContextCard(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(SlateCard)
+            .background(MaterialTheme.colorScheme.secondary)
             .padding(20.dp)
     ) {
         Column {
@@ -151,7 +142,7 @@ private fun ContextCard(
                 Spacer(Modifier.width(10.dp))
                 Text(
                     text = title,
-                    color = White,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -159,7 +150,7 @@ private fun ContextCard(
             Spacer(Modifier.height(10.dp))
             Text(
                 text = body,
-                color = OffWhite,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 13.sp,
                 lineHeight = 20.sp
             )
@@ -180,13 +171,13 @@ private fun ConfidenceTable() {
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(SlateCard)
+            .background(MaterialTheme.colorScheme.secondary)
             .padding(20.dp)
     ) {
         Column {
             Text(
                 text = "Confidence Table",
-                color = White,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -205,7 +196,7 @@ private fun ConfidenceTable() {
                     }
                     Text(
                         text = score,
-                        color = IceBlue,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Black
                     )

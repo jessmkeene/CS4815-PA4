@@ -13,7 +13,7 @@ class WeatherRepository {
         .create(WeatherAPI::class.java)
 
     companion object {
-        private const val API_KEY = "YOUR_API_KEY_HERE"
+        private const val API_KEY = "5b92f0316b97c94d6cc77ea1ff75e0c5"
     }
 
     suspend fun getWeather(

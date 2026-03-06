@@ -1,3 +1,5 @@
+//Chloe Polit and Jessica Keene
+
 package com.example.pa4.ui
 
 import androidx.compose.foundation.background
@@ -27,11 +29,7 @@ fun PrivacyScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(NavyDeep, NavyMid, Color(0xFF0F172A))
-                )
-            )
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             modifier = Modifier
@@ -42,10 +40,9 @@ fun PrivacyScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // ── Header ────────────────────────────────────────────────────────
             Text(
                 text = "▲  YOUR DATA",
-                color = IceBlue,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 3.sp
@@ -53,7 +50,7 @@ fun PrivacyScreen() {
             Spacer(Modifier.height(6.dp))
             Text(
                 text = "PRIVACY",
-                color = White,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Black,
                 letterSpacing = 6.sp
@@ -63,19 +60,19 @@ fun PrivacyScreen() {
                 modifier = Modifier
                     .width(48.dp)
                     .height(2.dp)
-                    .background(Brush.horizontalGradient(listOf(IceBlue, BrightBlue)))
+                    .background(MaterialTheme.colorScheme.background)
             )
             Spacer(Modifier.height(8.dp))
             Text(
                 text = "No data ever leaves your device.",
-                color = IceBlue,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.sp
             )
             Spacer(Modifier.height(36.dp))
 
-            // ── Permissions ───────────────────────────────────────────────────
+
             PrivacySectionHeader("PERMISSIONS")
             Spacer(Modifier.height(12.dp))
 
@@ -119,7 +116,6 @@ fun PrivacyScreen() {
 
             Spacer(Modifier.height(24.dp))
 
-            // ── Data handling ─────────────────────────────────────────────────
             PrivacySectionHeader("DATA HANDLING")
             Spacer(Modifier.height(12.dp))
 
@@ -160,7 +156,7 @@ private fun PrivacySectionHeader(title: String) {
         Box(modifier = Modifier.weight(1f).height(1.dp).background(SlateLight))
         Text(
             text = "  $title  ",
-            color = IceBlue,
+            color = MaterialTheme.colorScheme.primary,
             fontSize = 11.sp,
             fontWeight = FontWeight.Bold,
             letterSpacing = 3.sp
@@ -180,7 +176,7 @@ private fun PrivacyCard(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(SlateCard)
+            .background(MaterialTheme.colorScheme.secondary)
             .padding(20.dp)
     ) {
         Column {
@@ -188,17 +184,17 @@ private fun PrivacyCard(
                 Icon(
                     imageVector = icon,
                     contentDescription = title,
-                    tint = IceBlue,
+                    tint = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.size(22.dp)
                 )
                 Spacer(Modifier.width(10.dp))
                 Column {
-                    Text(text = title, color = White, fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                    Text(text = permission, color = IceBlue, fontSize = 11.sp, letterSpacing = 1.sp)
+                    Text(text = title, color = MaterialTheme.colorScheme.primary, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                    Text(text = permission, color = MaterialTheme.colorScheme.primary, fontSize = 11.sp, letterSpacing = 1.sp)
                 }
             }
             Spacer(Modifier.height(10.dp))
-            Text(text = reason, color = OffWhite, fontSize = 13.sp, lineHeight = 20.sp)
+            Text(text = reason, color = MaterialTheme.colorScheme.primary, fontSize = 13.sp, lineHeight = 20.sp)
         }
     }
 }
@@ -213,7 +209,7 @@ private fun DataHandlingCard(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(SlateCard)
+            .background(MaterialTheme.colorScheme.primary)
             .padding(20.dp)
     ) {
         Column {
@@ -221,14 +217,14 @@ private fun DataHandlingCard(
                 Icon(
                     imageVector = icon,
                     contentDescription = title,
-                    tint = IceBlue,
+                    tint = MaterialTheme.colorScheme.background,
                     modifier = Modifier.size(22.dp)
                 )
                 Spacer(Modifier.width(10.dp))
-                Text(text = title, color = White, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Text(text = title, color = MaterialTheme.colorScheme.primary, fontSize = 15.sp, fontWeight = FontWeight.Bold)
             }
             Spacer(Modifier.height(10.dp))
-            Text(text = body, color = OffWhite, fontSize = 13.sp, lineHeight = 20.sp)
+            Text(text = body, color = MaterialTheme.colorScheme.primary, fontSize = 13.sp, lineHeight = 20.sp)
         }
     }
 }

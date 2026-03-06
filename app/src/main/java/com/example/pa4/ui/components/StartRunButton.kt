@@ -1,3 +1,5 @@
+//Chloe Polit and Jessica Keene
+
 package com.example.pa4.ui.components
 
 import androidx.compose.foundation.layout.*
@@ -8,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
-import com.example.pa4.viewmodel.SkiViewModel
 
 @Composable
 fun StartRunButton(

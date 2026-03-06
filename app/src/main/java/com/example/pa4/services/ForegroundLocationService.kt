@@ -1,3 +1,5 @@
+//Chloe Polit and Jessica Keene
+
 package com.example.pa4.services
 
 import android.app.*
@@ -22,7 +24,7 @@ class ForegroundLocationService : Service() {
     private fun collectLocation() {
         serviceScope.launch {
             repository.locationUpdates.collect {
-                // repository flow keeps emitting — SkiViewModel collects separately
+                // repository flow keeps emitting, SkiViewModel collects separately
             }
         }
     }
