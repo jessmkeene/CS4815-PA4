@@ -4,13 +4,27 @@ PA4 Ski Tracker App
 Names: Chloe Polit and Jess Keene
 
 How are you using your sensors to intelligently react to the user's environment and "assist" the user
-- Current weather updates from API to let user know how cold it is
-- Location services, sensors for accelerometer for tracking ski runs
+Software sensor:
+- Current weather updates from API to let user know current temperature and conditions on the mountains
+Hardware sensors:
+- Location services for altitude/GPS
+- Accelerometer to track speeds of run / if user is stationary
 
 
 Any instructions that we should know on how to run/use your application.
 Run on emulator in Android Studio
+Click start run button to begin tracking a run, button appearance should change and
+click end run button to end run
+Refer to the tabs for any further explanation or instruction.
 
 Any references/resources used. I highly doubt this section will be blank, since there is so much we didn't cover in this class!
 
 Resources:
+Referenced
+GompeiFountainJumpApp and CityExplorerApp for proper implementation of multiple tabs/screens,
+MVVM architecture, and utilization of buttons for our main functionality within the app.
+The usage of the models package from CityExplorerApp was implemented within our own app.
+Also referred to Lecture 17 for further explanation about multiple tabs.
+
+StackOverFlow was referenced for any specific questions we had such as formatting, proper utilization of intent,
+and properly displaying a versatile theme/background.
